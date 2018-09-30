@@ -14,9 +14,11 @@ The database in question is a newspaper company database where we have 3 tables;
 
 ## Motivation
 
-For this project, I used Docker instead of Vagrant as recommended because I am more interested inß Docker and Microservices. 
+For this project, I used Docker instead of Vagrant as recommended because I am more interested in Docker and Microservices. 
 
-The structure of the application is broken up services. Each services has its own Dockerfile where the dependencies are decleared. The services are orchestrated and combined by the docker-compose.yml file.
+The structure of the application is microservices. Each services has its own Dockerfile where the dependencies are declared. 
+
+The services are orchestrated and combined by the docker-compose.yml file.
 
     .
     ├── docker-compose.yml
@@ -25,11 +27,22 @@ The structure of the application is broken up services. Each services has its ow
     │   └── python              # main application service written in python
     └── ...
 
+*entrypoint.sh* ensures containers are brought up in succinct order: postgresql is needed to come up first because it is a backing service.
+
+Inspired by *The Twelve-Factor Application Design* (https://12factor.net/)
+
+## Benefits and Features
+
+* Containers (Docker) are much more efficient than Virtual Machines (Vagrant)
+* Dependencies are declared, injected, decoupled and source controlled
+* Fully Automated, Deterministic and Reproducible Build
+* Removes all manual steps that will cause issues for CI/CD
+
 ## Requirements
 
 Docker (https://www.docker.com/get-started)
 
-## How to Run the Project
+## Installing
 
 Clone the Project using Git LFS
 
@@ -43,7 +56,7 @@ Open Terminal && cd into Project
 docker-compose up --build
 ```
 
-## How to Shutdown the Project
+## Teardown
 
 ```bash
 docker-compose down
