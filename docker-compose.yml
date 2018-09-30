@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  python:
+    build: 
+      context: ./src/python
+    ports:
+      - "5000:5000"
+    links:
+      - postgresql:postgresql  
+    volumes:
+      - './src/python:/srv/python'
+    depends_on:
+      - postgresql
+    environment: 
+      PYTHONUNBUFFERED: 1
+
+  postgresql:
+    build: 
+      context: ./src/postgresql
+    restart: always  
+    ports:
+      - "5432:5432"  
+    environment:
+      POSTGRES_USER: 'postgresql'
+      POSTGRES_DB: 'news'
